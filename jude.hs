@@ -102,7 +102,7 @@ reverse' x = x
 
 --pembatas
 
-last' x = x
+last' (x:xs) = x * 0 + last' xs
 
 --pembatas
 
