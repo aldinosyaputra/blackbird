@@ -156,8 +156,9 @@ sum' (x:xs) = x + (sum xs)
 
 --pembatas
 
-product' [] = sum' []
-product' (x:xs) = sum' (x:xs)
+product' [] = 1
+product' (x:xs) = x * product' xs
+
 
 --pembatas
 
