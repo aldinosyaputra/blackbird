@@ -81,11 +81,21 @@ scanl1' x = x
 
 --pembatas
 
-elem' x = x
+elem' a [] = False
+elem' a (x:xs)
+  | x == a = True
+  | a /= x = elem' a (xs)
+  | otherwise = False
+
 
 --pembatas
 
-notElem' x = x
+notElem' a [] = True
+notElem' a (x:xs)
+  | x == a = False
+  | a /= x = notElem' a (xs)
+  | otherwise = True
+
 
 --pembatas
 
@@ -98,10 +108,13 @@ length' (x:xs) = 1 + (length' xs)
 
 --pembatas
 
-reverse' x = x
+reverse' [] = []
+reverse' (x:xs) = (reverse' (xs)) ++ [x]
+
 
 --pembatas
 
+last' [x] = x
 last' (x:xs) = x * 0 + last' xs
 
 --pembatas
