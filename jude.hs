@@ -39,7 +39,11 @@ map' f (x:xs) = f x : map' f xs
 
 --pembatas
 
-filter' x = x
+filter' _ [] = []
+filter' a [x]
+  | a x == False = []
+filter' a (x:xs)
+  | a x == True = x:(filter' a xs)
 
 --pembatas
 
