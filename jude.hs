@@ -33,7 +33,9 @@ snd' (x,y) = y
 
 --pembatas
 
-map' x = x
+map' f [] = []
+map' f (x:xs) = f x : map' f xs
+
 
 --pembatas
 
@@ -69,7 +71,9 @@ zipWith' x = x
 
 --pembatas
 
-nth' x = x
+nth' (x:xs) a
+  | a == 0 = x
+  | a > 0 = nth (xs) (a-1)
 
 --pembatas
 
@@ -123,7 +127,8 @@ tail' (x:xs) = xs
 
 --pembatas
 
-init' x = x
+init' [a] = []
+init' (x:xs) = x:(init' xs)
 
 --pembatas
 
@@ -179,7 +184,7 @@ words' x = x
 
 --pembatas
 
-lines' x = x
+lines' z = ["z"]
 
 --pembatas
 
@@ -203,15 +208,25 @@ concatMap' x = x
 
 --pembatas
 
-all' x = x
+all' _ [] = True
+all' a (x:xs)
+  | a x == False = False
+  | otherwise = all' a xs
 
 --pembatas
 
-any' x = x
+any' _ [] = False
+any' a (x:xs)
+  | a x == True = True
+  | otherwise = any' a xs
 
 --pembatas
 
-insert' x = x
+insert' a [] = [a]
+
+insert' a (x:xs)
+  | a <= x = (a:x:xs)
+  | a > x = x:(insert' a xs)
 
 --pembatas
 
