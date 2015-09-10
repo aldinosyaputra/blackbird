@@ -45,6 +45,7 @@ filter' a [x]
 filter' a (x:xs)
   | a x == True = x:(filter' a xs)
 
+
 --pembatas
 
 delete' _ [] = []
@@ -55,7 +56,11 @@ delete' a (x:xs)
 
 --pembatas
 
-deleteAll' x = x
+deleteAll' _ [] = []
+deleteAll' a (x:xs)
+  | a == x = deleteAll' a xs
+  | otherwise = deleteAll' a xs
+
 
 --pembatas
 
@@ -188,7 +193,7 @@ words' x = x
 
 --pembatas
 
-lines' z = ["z"]
+lines' h = [h]
 
 --pembatas
 
@@ -200,11 +205,18 @@ unwords' x = x
 
 --pembatas
 
-takeWhile' x = x
+takeWhile' _ [] = []
+takeWhile' a (x:xs)
+  | a x == False = []
+  | a x == True = x:(takeWhile' a xs)
+
 
 --pembatas
 
-dropWhile' x = x
+dropWhile' _ [] = []
+dropWhile' a (x:xs)
+  | a x == True = dropWhile' a xs
+  | otherwise = x:xs
 
 --pembatas
 
@@ -286,7 +298,13 @@ partition' x = x
 
 --pembatas
 
-replicate' x = x
+replicate' 0 _ = []
+replicate' a x = x:replicate' (a-1) x
+
+
+
+
+
 
 --pembatas
 -- First Assignment
