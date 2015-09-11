@@ -44,7 +44,7 @@ filter' a [x]
   | a x == False = []
 filter' a (x:xs)
   | a x == True = x:(filter' a xs)
-
+  | otherwise = filter' a xs
 
 --pembatas
 
@@ -72,7 +72,9 @@ foldl1' x = x
 
 --pembatas
 
-zip' x = x
+zip' _ [] = []
+zip' [] _ = []
+zip' (x:xs) (y:ys) = (x,y):(zip (xs) (ys))
 
 --pembatas
 
@@ -157,7 +159,9 @@ concat' x = x
 
 --pembatas
 
-intersperse' x = x
+intersperse' _ [] = []
+intersperse' _ [x] = [x]
+intersperse' a (x:xs) = [x,a]++(intersperse' a xs)
 
 --pembatas
 
@@ -165,15 +169,24 @@ intercalate' x = x
 
 --pembatas
 
-and' x = x
+and' [] = True
+and' (x:xs)
+  | x == False = False
+  | otherwise = and' xs
 
 --pembatas
 
-or' x = x
+or' [] = False
+or' (x:xs)
+  | x == True = True
+  | otherwise = or' xs
 
 --pembatas
 
-zip3' x = x
+zip3' _ _ [] = []
+zip3' _ [] _ = []
+zip3' [] _ _ = []
+zip3' (x:xs) (y:ys) (z:zs) = (x,y,z):(zip3' (xs) (ys) (zs))
 
 --pembatas
 
@@ -260,11 +273,14 @@ sort' x = x
 
 --pembatas
 
-minimum' x = x
+minimum' [x] = x
+minimum' (x:xs) = min x (minimum' xs)
 
 --pembatas
 
-maximum' x = x
+maximum' [x] = x
+maximum' (x:xs) = max x (maximum' xs)
+
 
 --pembatas
 
@@ -272,7 +288,10 @@ inits' x = x
 
 --pembatas
 
-tails' x = x
+tails' [] = [[]]
+tails' [x] = [[x]] ++ [[]]
+tails' (x:xs) = (x:xs):(tails' xs)
+
 
 --pembatas
 
