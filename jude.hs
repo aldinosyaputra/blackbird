@@ -78,7 +78,10 @@ zip' (x:xs) (y:ys) = (x,y):(zip (xs) (ys))
 
 --pembatas
 
-zipWith' x = x
+zipWith' f _ [] = []
+zipWith' f [] _ = []
+zipWith' f (x:xs) (y:ys) = (f x y) : zipWith f (xs) (ys)
+
 
 --pembatas
 
@@ -206,7 +209,7 @@ words' x = x
 
 --pembatas
 
-lines' h = [h]
+--lines' h = [h]
 
 --pembatas
 
@@ -295,7 +298,10 @@ tails' (x:xs) = (x:xs):(tails' xs)
 
 --pembatas
 
-union' x = x
+--union' [] [] = []
+--union' [] (y:ys) = (y:ys)
+--union' (x:xs) [] = (x:xs)
+--union' (x:xs) (y:ys) = (x:xs) ++ (y:ys)
 
 --pembatas
 
@@ -303,9 +309,9 @@ intersect' x = x
 
 --pembatas
 
-group' [] = [[]]
-group' [x] = [[x]]
-group' (x:xs) = [[x]] ++ group' xs
+--group' [] = [[]]
+--group' [x] = [[x]]
+--group' (x:xs) = [[x]] ++ group' xs
 
 --pembatas
 
