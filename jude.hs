@@ -46,6 +46,7 @@ filter' a (x:xs)
   | a x == True = x:(filter' a xs)
   | otherwise = filter' a xs
 
+
 --pembatas
 
 delete' _ [] = []
@@ -64,12 +65,14 @@ deleteAll' a (x:xs)
 
 --pembatas
 
-foldl' x = x
+
+foldl'' f a [] = a
+foldl'' f a (x:xs) = f a (foldl'' f x (xs))
 
 --pembatas
 
-foldl1' x = x
-
+foldl1'' f [x] = x
+foldl1'' f (x:xs) = f x (foldl1'' f (xs))
 --pembatas
 
 zip' _ [] = []
@@ -87,7 +90,7 @@ zipWith' f (x:xs) (y:ys) = (f x y) : zipWith f (xs) (ys)
 
 nth' (x:xs) a
   | a == 0 = x
-  | a > 0 = nth (xs) (a-1)
+  | a > 0 = nth' (xs) (a-1)
 
 --pembatas
 
@@ -209,7 +212,7 @@ words' x = x
 
 --pembatas
 
---lines' h = [h]
+lines' h = [h]
 
 --pembatas
 
@@ -262,7 +265,11 @@ insert' a (x:xs)
 
 --pembatas
 
-zipWith3' x = x
+zipWith3' f [] _ _ = []
+zipWith3' f _ _ [] = []
+zipWith3' f _ [] _ = []
+zipWith3' f (x:xs) (y:ys) (z:zs) = f x y z : zipWith3' f (xs) (ys) (zs)
+
 
 --pembatas
 
@@ -277,13 +284,12 @@ sort' x = x
 --pembatas
 
 minimum' [x] = x
-minimum' (x:xs) = min x (minimum' xs)
+minimum' (x:xs) = min' x (minimum' xs)
 
 --pembatas
 
 maximum' [x] = x
-maximum' (x:xs) = max x (maximum' xs)
-
+maximum' (x:xs) = max' x (maximum' xs)
 
 --pembatas
 
@@ -295,13 +301,13 @@ tails' [] = [[]]
 tails' [x] = [[x]] ++ [[]]
 tails' (x:xs) = (x:xs):(tails' xs)
 
-
 --pembatas
 
 --union' [] [] = []
 --union' [] (y:ys) = (y:ys)
 --union' (x:xs) [] = (x:xs)
 --union' (x:xs) (y:ys) = (x:xs) ++ (y:ys)
+
 
 --pembatas
 
