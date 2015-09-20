@@ -94,11 +94,15 @@ nth' (x:xs) a
 
 --pembatas
 
-scanl' x = x
+scanl'' f a [] = [a]
+scanl'' f a (x:xs) = [a] ++ [f a x] ++ [f a (scanl'' f a (x:xs))]
+
 
 --pembatas
 
-scanl1' x = x
+scanl1' f [] = []
+scanl1' f [x] = [x]
+scanl1' f (x:xs) = [x] ++ scanl1' f ((f x (head xs)):tail xs)
 
 --pembatas
 
@@ -161,7 +165,9 @@ min' x y
 
 --pembatas
 
-concat' x = x
+concat' [x] = x
+concat' (x:xs) = x ++ concat' xs
+
 
 --pembatas
 
@@ -303,10 +309,10 @@ tails' (x:xs) = (x:xs):(tails' xs)
 
 --pembatas
 
---union' [] [] = []
---union' [] (y:ys) = (y:ys)
---union' (x:xs) [] = (x:xs)
---union' (x:xs) (y:ys) = (x:xs) ++ (y:ys)
+union' [] [] = []
+union' [] (y:ys) = (y:ys)
+union' (x:xs) [] = (x:xs)
+union' (x:xs) (y:ys) = (x:xs) ++ (y:ys)
 
 
 --pembatas
@@ -315,13 +321,13 @@ intersect' x = x
 
 --pembatas
 
---group' [] = [[]]
---group' [x] = [[x]]
---group' (x:xs) = [[x]] ++ group' xs
+group' [] = [[]]
+group' [x] = [[x]]
+group' (x:xs) = [[x]] ++ group' xs
 
 --pembatas
 
-splitAt' x = x
+splitAt' a (x:xs) = (take' a (x:xs), drop' a (x:xs))
 
 --pembatas
 
