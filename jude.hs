@@ -60,19 +60,19 @@ delete' a (x:xs)
 deleteAll' _ [] = []
 deleteAll' a (x:xs)
   | a == x = deleteAll' a xs
-  | otherwise = deleteAll' a xs
+  | otherwise = x : deleteAll' a xs
 
 
 --pembatas
 
 
 foldl'' f a [] = a
-foldl'' f a (x:xs) = f a (foldl'' f x (xs))
+foldl'' f a (x:xs) = f (foldl'' f a (xs)) x
 
 --pembatas
 
-foldl1'' f [x] = x
-foldl1'' f (x:xs) = f x (foldl1'' f (xs))
+--foldl1'' f [x] = x
+--foldl1'' f (x:xs) = f x (foldl1'' f (xs))
 --pembatas
 
 zip' _ [] = []
@@ -218,7 +218,7 @@ words' x = x
 
 --pembatas
 
-lines' h = [h]
+lines' x = x
 
 --pembatas
 
@@ -281,11 +281,16 @@ zipWith3' f (x:xs) (y:ys) (z:zs) = f x y z : zipWith3' f (xs) (ys) (zs)
 
 -- 1.b
 
-nub' x = x
+nub' [x] = [x]
+nub' (x:xs) = (x:(deleteAll' x (nub' xs)))
 
 --pembatas
 
-sort' x = x
+sort' [x] = [x]
+sort' (x:xs)
+  | x == minimum (x:xs) = x:sort' xs
+  | otherwise = sort' (xs ++ [x])
+
 
 --pembatas
 
@@ -299,7 +304,8 @@ maximum' (x:xs) = max' x (maximum' xs)
 
 --pembatas
 
-inits' x = x
+inits' [] = [[]]
+inits' (x:xs) =  inits' (init (x:xs)) ++ [x:xs]
 
 --pembatas
 
@@ -312,7 +318,9 @@ tails' (x:xs) = (x:xs):(tails' xs)
 union' [] [] = []
 union' [] (y:ys) = (y:ys)
 union' (x:xs) [] = (x:xs)
-union' (x:xs) (y:ys) = (x:xs) ++ (y:ys)
+union' (x:xs) (y:ys)
+  | x == y = [x] ++ union' (xs) (ys)
+  | x /= y = union (x:xs) ys
 
 
 --pembatas
@@ -323,7 +331,7 @@ intersect' x = x
 
 group' [] = [[]]
 group' [x] = [[x]]
-group' (x:xs) = [[x]] ++ group' xs
+--group' (x:xs) = [[x]] ++ group' xs
 
 --pembatas
 
