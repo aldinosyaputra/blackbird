@@ -331,7 +331,7 @@ intersect' x = x
 
 group' [] = [[]]
 group' [x] = [[x]]
---group' (x:xs) = [[x]] ++ group' xs
+group' (x:xs) = [takeWhile (==x) (x:xs)] ++ group' (dropWhile (==x) xs)
 
 --pembatas
 
