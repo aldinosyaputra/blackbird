@@ -223,11 +223,13 @@ words' x = x
 
 --pembatas
 
-lines' x = x
+lines' h = [h]
 
 --pembatas
 
-unlines' x = x
+unlines' [h]
+  | h == "" = "\n"
+  | otherwise = h ++ "\n"
 
 --pembatas
 
