@@ -71,8 +71,10 @@ foldl'' f a (x:xs) = f (foldl'' f a (xs)) x
 
 --pembatas
 
---foldl1'' f [x] = x
---foldl1'' f (x:xs) = f x (foldl1'' f (xs))
+foldl1'' f (x:xs)
+  | xs == [] = x
+  | otherwise = f x (foldl1'' f xs)
+  
 --pembatas
 
 zip' _ [] = []
@@ -177,7 +179,10 @@ intersperse' a (x:xs) = [x,a]++(intersperse' a xs)
 
 --pembatas
 
-intercalate' x = x
+intercalate' x (y:ys)
+  | ys == [] = y
+  | otherwise = y ++ x ++ intercalate' x ys
+
 
 --pembatas
 
@@ -325,11 +330,14 @@ union' (x:xs) (y:ys)
 
 --pembatas
 
-intersect' x = x
+intersect' [] (y:ys) = []
+
+intersect' (x:xs) (y:ys)
+  | elem x (y:ys) = x:(intersect' xs (y:ys))
+  | otherwise = intersect' xs (y:ys)
 
 --pembatas
 
-group' [] = [[]]
 group' [x] = [[x]]
 group' (x:xs) = [takeWhile (==x) (x:xs)] ++ group' (dropWhile (==x) xs)
 
@@ -339,7 +347,12 @@ splitAt' a (x:xs) = (take' a (x:xs), drop' a (x:xs))
 
 --pembatas
 
-partition' x = x
+partition' a [] = ([],[])
+partition' a (x:xs) = ((filter' a (x:xs)), (unfilter a (x:xs)))
+  where unfilter _ [] = []
+        unfilter a (x:xs)
+          | a x == False = x:(unfilter a xs)
+          | otherwise = unfilter a xs
 
 --pembatas
 
