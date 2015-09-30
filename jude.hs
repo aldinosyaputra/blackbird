@@ -223,7 +223,9 @@ words' x = x
 
 --pembatas
 
---lines' h = [h]
+lines' "" = []
+lines' (x:xs)
+  | x == '\n' = "":[xs]
 
 --pembatas
 
